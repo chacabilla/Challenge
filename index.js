@@ -1,13 +1,10 @@
+require('dotenv').config();
 const express = require('express');
-const { PrismaClient } = require('@prisma/client');
 const bodyParser = require('body-parser');
 const app = express();
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 const PORT = 3000;
-
-// inisialisasi prisma client
-const prisma = new PrismaClient();
 
 // set view engine
 app.set('view engine', 'ejs');
@@ -15,6 +12,13 @@ app.set('views', './src/views');
 
 // middleware untuk parsing JSON
 app.use(bodyParser.json());
+
+// media handler
+app.use('/images', express.static('uploads/images'));
+app.use('/files', express.static('uploads/files'));
+
+const mediaRoutes = require('./src/routes/media');
+app.use('/api/v1/media', mediaRoutes);
 
 // routes
 const userRoutes = require('./src/routes/users');

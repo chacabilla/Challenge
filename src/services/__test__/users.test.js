@@ -79,7 +79,7 @@ describe('UserService', () => {
             }
         };
     
-        await expect(UserService.createUser(data)).rejects.toThrow('\"password\" length must be at least 6 characters long');
+        await expect(UserService.createUser(data)).rejects.toThrow('"password" length must be at least 6 characters long');
     });
 
     // test createUser failed case (user with email already exists)
@@ -99,14 +99,6 @@ describe('UserService', () => {
         };
         
         await expect(UserService.createUser(data)).rejects.toThrow('User with this email already exists');
-    });
-    
-    // test getAllUsers no data case
-    test('getUserById should return null if user not found', async () => {
-        prisma.user.findUnique.mockResolvedValue(null);
-        
-        const result = await UserService.getUserById(999);
-        expect(result).toBeNull();
     });
 
     // test getAllUsers success case

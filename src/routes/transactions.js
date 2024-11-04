@@ -4,11 +4,6 @@ const transactionService = require('../services/transactions');
 
 // POST: create a new transaction
 router.post('/', async (req, res) => {
-    const { error } = transactionSchema.validate(req.body);
-    if (error) {
-        return res.status(400).json({ error: error.details[0].message });
-    }
-
     try {
         const transaction = await transactionService.createTransaction(req.body);
         res.json(transaction);
